@@ -1,8 +1,79 @@
-<h1 class="text-3xl font-bold">Pricing Page</h1>
-<hr class="my-2" />
+<section class="py-24 bg-gray-50/50 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-base font-bold text-red-600 tracking-wide uppercase mb-2">Precios</h2>
+            <p class="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
+                Elige tu camino a la <span class="bg-linear-to-r from-red-600 to-red-400 bg-clip-text text-transparent">Cúspide</span>.
+            </p>
+            <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+                Planes diseñados tanto para entrenadores casuales como para maestros competitivos.
+            </p>
+        </div>
 
-<section class="p-2">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut rerum vitae autem error dolor iusto fugiat, sunt eum harum eos quis
-    reiciendis recusandae, at eligendi doloremque numquam, tenetur iste incidunt. Dicta ducimus laboriosam molestias sequi nulla ullam
-    laborum recusandae, magnam adipisci beatae quo error magni facilis exercitationem repudiandae non ea!
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+            @for (tier of pricingTiers; track tier.name) {
+                <div
+                    [class]="
+                        'relative p-8 rounded-3xl bg-white transition-all duration-300 ' +
+                        (tier.popular
+                            ? 'border-2 border-red-500 shadow-2xl scale-105 z-10'
+                            : 'border border-gray-100 shadow-xl hover:shadow-2xl')
+                    "
+                >
+                    @if (tier.popular) {
+                        <div class="absolute -top-4 left-1/2 -translate-x-1/2">
+                            <span
+                                class="bg-linear-to-r from-red-600 to-red-400 text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg"
+                            >
+                                Más Popular
+                            </span>
+                        </div>
+                    }
+
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ tier.name }}</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed">{{ tier.description }}</p>
+                    </div>
+
+                    <div class="flex items-baseline mb-8">
+                        <span class="text-5xl font-extrabold text-gray-900 tracking-tight">${{ tier.price }}</span>
+                        <span class="text-gray-500 ml-2">/mes</span>
+                    </div>
+
+                    <ul class="space-y-4 mb-10">
+                        @for (feature of tier.features; track feature) {
+                            <li class="flex items-center text-gray-600">
+                                <svg
+                                    class="h-5 w-5 text-green-500 mr-3 flex-shrink-0"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span class="text-sm">{{ feature }}</span>
+                            </li>
+                        }
+                    </ul>
+
+                    <button
+                        [class]="
+                            'w-full py-4 px-6 rounded-2xl font-bold transition-all duration-300 ' +
+                            (tier.popular
+                                ? 'bg-red-600 text-white hover:bg-red-700 shadow-lg shadow-red-200 hover:shadow-red-300'
+                                : 'bg-gray-900 text-white hover:bg-gray-800 shadow-lg shadow-gray-200')
+                        "
+                    >
+                        {{ tier.buttonText }}
+                    </button>
+                </div>
+            }
+        </div>
+
+        <div class="mt-20 text-center">
+            <p class="text-gray-500 text-sm italic">
+                * Todos los planes incluyen actualizaciones gratuitas de la Pokedex y soporte comunitario.
+            </p>
+        </div>
+    </div>
 </section>

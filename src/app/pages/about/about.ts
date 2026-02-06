@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-about-page',
@@ -6,4 +7,14 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     templateUrl: './about.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AboutPage {}
+export class AboutPage implements OnInit {
+    private title = inject(Title);
+    private meta = inject(Meta);
+
+    ngOnInit(): void {
+        this.title.setTitle('Sobre Nosotros - PokeApp');
+        this.meta.updateTag({ name: 'description', content: 'Conoce más sobre la misión y el equipo detrás de PokeApp.' });
+        this.meta.updateTag({ name: 'og:title', content: 'Sobre Nosotros - PokeApp' });
+        this.meta.updateTag({ name: 'keywords', content: 'Pokemon, About, Team, PokeApp' });
+    }
+}
