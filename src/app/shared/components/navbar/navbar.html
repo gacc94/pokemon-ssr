@@ -1,0 +1,79 @@
+<nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-lg bg-white/70 border-b border-gray-200/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-20 items-center">
+            <!-- Logo -->
+            <a routerLink="/" class="flex-shrink-0 flex items-center gap-3 group cursor-pointer no-underline">
+                <div
+                    class="relative w-10 h-10 flex items-center justify-center rounded-xl bg-red-600 shadow-lg shadow-red-200 group-hover:rotate-12 transition-transform duration-300"
+                >
+                    <!-- Pokeball SVG -->
+                    <svg viewBox="0 0 24 24" class="w-6 h-6 text-white" fill="currentColor">
+                        <path
+                            d="M12,2C6.47,2,2,6.47,2,12s4.47,10,10,10s10-4.47,10-10S17.53,2,12,2z M12,20c-4.41,0-8-3.59-8-8 c0-1.85,0.63-3.55,1.69-4.9l4.9,4.9c0,0.14,0,1,0.41,1.5C11.41,13.91,12,14,12,14c0.59,0,1.09-0.5,1.59-1.5 c0.41-0.5,0.41-1.36,0.41-1.5l4.9-4.9C19.37,8.45,20,10.15,20,12C20,16.41,16.41,20,12,20z"
+                        />
+                    </svg>
+                </div>
+                <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-red-400 tracking-tight">
+                    Poke<span class="text-gray-900">App</span>
+                </span>
+            </a>
+
+            <!-- Desktop Links -->
+            <div class="hidden md:flex items-center space-x-8">
+                @for (link of navLinks; track link.path) {
+                    <a
+                        [routerLink]="link.path"
+                        routerLinkActive="text-red-600"
+                        #rla="routerLinkActive"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        class="relative text-sm font-semibold text-gray-600 hover:text-red-600 transition-colors duration-200 group py-2"
+                    >
+                        {{ link.label }}
+                        <span
+                            class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 transition-all duration-300 group-hover:w-full"
+                            [class.w-full]="rla.isActive"
+                        ></span>
+                    </a>
+                }
+            </div>
+
+            <!-- Actions (e.g. Mobile Toggle) -->
+            <div class="flex items-center md:hidden">
+                <button
+                    (click)="toggleMenu()"
+                    class="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
+                    aria-label="Toggle menu"
+                >
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        @if (isMobileMenuOpen()) {
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        } @else {
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        }
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    @if (isMobileMenuOpen()) {
+        <div class="md:hidden border-t border-gray-100 bg-white/95 backdrop-blur-xl transition-all duration-300">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                @for (link of navLinks; track link.path) {
+                    <a
+                        [routerLink]="link.path"
+                        (click)="toggleMenu()"
+                        routerLinkActive="bg-red-50 text-red-600 font-semibold"
+                        class="block px-4 py-3 rounded-xl text-base font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                    >
+                        {{ link.label }}
+                    </a>
+                }
+            </div>
+        </div>
+    }
+</nav>
+
+<!-- Spacer to prevent content from going under the fixed navbar -->
+<div class="h-20"></div>
