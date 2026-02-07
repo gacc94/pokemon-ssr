@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
@@ -10,6 +11,7 @@ import { Meta, Title } from '@angular/platform-browser';
 export class PricingPage implements OnInit {
     private title = inject(Title);
     private meta = inject(Meta);
+    private platformId = inject(PLATFORM_ID);
 
     public pricingTiers = [
         {
@@ -39,6 +41,10 @@ export class PricingPage implements OnInit {
     ];
 
     ngOnInit(): void {
+        if (!isPlatformServer(this.platformId)) {
+            document.title = 'Planes y Precios - PokeApp';
+        }
+
         this.title.setTitle('Planes y Precios - PokeApp');
         this.meta.updateTag({ name: 'description', content: 'Encuentra el plan perfecto para convertirte en el mejor Maestro Pokémon.' });
     }
